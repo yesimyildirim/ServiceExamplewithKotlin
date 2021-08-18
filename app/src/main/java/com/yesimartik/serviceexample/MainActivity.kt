@@ -14,18 +14,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Variable to hold service class name
+        //Servis sınıfı adını tutacak deişkeni tanımlıyoruz
         val serviceClass = RandomNumberService::class.java
 
-        // Initialize a new Intent instance
+        // servis Sınıfı için yeni bir intent başlatıyoruz
         val intent = Intent(applicationContext, serviceClass)
 
 
-        // Button to start the service
+        // Servisi başlatacak butonun tıklanma olayı
         button_start.setOnClickListener{
-            // If the service is not running then start it
+            // Servis çalışmıyorsa başlatma koşulu
             if (!isServiceRunning(serviceClass)) {
-                // Start the service
+                // Servisi başlatma
                 startService(intent)
             } else {
                 toast("Service already running.")
@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        // Button to stop the service
+        // Servisi durduracak butonun tıklanma olayı
         button_stop.setOnClickListener{
-            // If the service is not running then start it
+            // Servis çalışmıyorsa başlatma koşulu
             if (isServiceRunning(serviceClass)) {
-                // Stop the service
+                // Servisi durdurma
                 stopService(intent)
             } else {
                 toast("Service already stopped.")
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        // Get the service status
+        // servis durumunu belirleme butonu tıklama olayı
         button_stats.setOnClickListener{
             if (isServiceRunning(serviceClass)) {
                 toast("Service is running.")
@@ -57,14 +57,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    // Custom method to determine whether a service is running
+    // Servisin çalışıp çalışmadığını belirlemek için özel method
     private fun isServiceRunning(serviceClass: Class<*>): Boolean {
         val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
 
-        // Loop through the running services
+        // Çalışan servisler arasında döngü
         for (service in activityManager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.name == service.service.className) {
-                // If the service is running then return true
+                // Hizmet çalışıyorsa, true değerini döndürün
                 return true
             }
         }
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-// Extension function to show toast message
+// Toast mesajını göstermek için fonksiyon
 fun Context.toast(message:String){
     Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
 }
